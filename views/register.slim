@@ -1,0 +1,9 @@
+.wrapper
+    .register-container
+        h3 Register
+        form action="/register" method="post"
+            input type="email" name="email" placeholder="Email" autocomplete="off" value="#{session[:register_email]}"
+            input type="text" name="username" placeholder="Username" autocomplete="off" value="#{session[:register_username]}"
+            input type="password" name="password" placeholder="Password" value="#{session[:register_password]}"
+            input type="password" name="confirm_password" placeholder="Confirm password"
+            input type="submit" value="Register"

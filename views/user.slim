@@ -1,0 +1,12 @@
+.user-information
+    img src="../img/user_icon.png" alt="" class="default-user-image"
+    h1 = session[:username]
+
+    form method="post" action="/update_user"
+        p Email
+        input type="email" name="email" value="#{session[:email]}"
+        p New password
+        input type="password" name="password"
+        p Confirm password
+        input type="password" name="confirm_password"
+        input type="submit" value="Update profile"

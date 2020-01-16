@@ -1,0 +1,34 @@
+.files_home
+    h3 Your files
+    table
+        tr  
+            td 
+            td File name
+            td File type
+            td Upload date
+            td Last access date
+            td File size
+            td 
+        - session[:owned_files].each_with_index do |file, index|
+            tr.files
+                td = index + 1
+                td = file["file_name"].split(".")[0]
+                td = file["file_type"]
+                td = file["upload_date"].slice(0..-4)
+                td = file["last_access_date"].slice(0..-4)
+                - if file["file_size"] > 10**3 && file["file_size"] < 10**6
+                    td #{(file["file_size"]/2**10).round(1)} kB
+                - elsif file["file_size"] > 10**6
+                    td #{((file["file_size"])/2**20).round(1)} MB
+                td
+                    form action="/download" method="post" 
+                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        input type="submit" value="Download"
+                td
+                    form action="/delete" method="post" 
+                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        input type="submit" value="Delete"
+            
+
+    style
+    h3 Shared files
