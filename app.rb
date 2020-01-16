@@ -8,9 +8,17 @@ enable :sessions
 db = SQLite3::Database.new("db/cloud_db.db")
 db.results_as_hash = true
 
-get("/*/") do
-    if session[:user_id] == nil
-        redirect("/")
+before do
+
+    p request.path_info
+
+    path = request.path_info
+
+    if session[:user_id] == nil || session[:user_id] == 0
+        session[:user_id]
+        if path != "/"
+            redirect("/")
+        end
     end
 end
 
@@ -29,7 +37,7 @@ get("/register") do
     slim(:register)
 end
 
-post("/register") do 
+post("/register") do
     email = params[:email]
     username = params[:username]
     password = params[:password]
@@ -96,7 +104,6 @@ get("/home") do
     end
 
     session[:owned_files] = db.execute("SELECT * FROM files WHERE owner_id = ?", session[:user_id])
-
     slim(:home)
 end
 
@@ -149,8 +156,6 @@ post("/download") do
 
     db.execute("UPDATE files SET last_access_date = ? WHERE file_id = ?", time, file_id)
     send_file("./public/uploads/#{file_id}/#{filename}", :filename=>filename, :type=>"application/octet-stream")
-
-
     redirect("/home")
 end
 
