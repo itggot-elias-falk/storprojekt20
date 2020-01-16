@@ -1,4 +1,11 @@
 .upload-container
     form method="post" action="/upload" enctype="multipart/form-data"
-        input type="file" name="file"
-        input type="submit" value="Upload file"
+        div.file-selector
+            input type="file" name="file" class="file-upload-button"
+        div.file-options
+            input type="text" name="file_name" placeholder="Filename"
+            select name="folder" value="Select folder"
+                option value="Select folder" Select folder
+                / - user_folders.each do |folder_name|
+                /     option value="#{folder_name}"
+            input type="submit" value="Upload file"

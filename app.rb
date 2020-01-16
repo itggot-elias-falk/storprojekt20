@@ -8,19 +8,19 @@ enable :sessions
 db = SQLite3::Database.new("db/cloud_db.db")
 db.results_as_hash = true
 
-before do
+# before do
 
-    p request.path_info
+#     p request.path_info
 
-    path = request.path_info
+#     path = request.path_info
 
-    if session[:user_id] == nil || session[:user_id] == 0
-        session[:user_id]
-        if path != "/"
-            redirect("/")
-        end
-    end
-end
+#     if session[:user_id] == nil || session[:user_id] == 0
+#         session[:user_id]
+#         if path != "/"
+#             redirect("/")
+#         end
+#     end
+# end
 
 get("/") do
     if session[:user_id] != 0 && session[:user_id] != nil
@@ -65,11 +65,12 @@ post("/register") do
 
     password_digest = BCrypt::Password.create(password)
     db.execute("INSERT INTO users (email, username, password_digest, rank, username_downcase) VALUES (?, ?, ?, ?, ?)", email, username, password_digest, 0, username.downcase)
-
+    
     session[:username] = username
     session[:email] = email
     session[:user_id] = db.execute("SELECT user_id FROM users WHERE username = ?", username)[0]["user_id"]
     session[:rank] = 0
+    db.execute("INSERT INTO folders (owner_id, folder_name) VALUES (?, ?)", session[:user_id], session[:user_id])
 
     redirect("/home")
 end
@@ -121,7 +122,7 @@ end
 
 post("/upload") do
     if params[:file] && params[:file][:filename]
-        filename = params[:file][:filename]
+        filename = params[:file_name]
         file = params[:file][:tempfile]
         file_type = params[:file][:type]
         p file_type
