@@ -298,11 +298,17 @@ div.upload-container div {
     justify-content: space-around;
 }
 
-div.file-options input,  div.file-options select{
+div.file-options input[type="text"],  div.file-options select{
     width: 150px;
     height: 35px;
     border-radius: 2px;
     border: none;
+}
+
+div.file-options input[type="checkbox"] {
+    height: 35px;
+    width: 35px;
+    background-color: #eee;
 }
 
 .file-upload-button {

@@ -170,3 +170,11 @@ end
 get("/user") do
     slim(:user)
 end
+
+post("/share_file") do
+    share_username = params[:username]
+    user_id = db.execute("SELECT user_id FROM users WHERE username = ?", share_username).first["user_id"]
+    file_id = params[:file_id]
+    db.execute("INSERT INTO shared_files (file_id, user_id)")
+    redirect("/share")
+end
