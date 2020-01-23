@@ -6,7 +6,7 @@
             input type="text" name="file_name" placeholder="Filename"
             select name="folder" value="Select folder"
                 option value="Select folder" Select folder
-                / - user_folders.each do |folder_name|
-                /     option value="#{folder_name}"
+                - session[:user_folders].each do |folder|
+                    option value="#{folder["folder_name"]}"
             input type="checkbox" name="public" Set public
         input type="submit" value="Upload file"

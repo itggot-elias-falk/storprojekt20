@@ -114,6 +114,7 @@ post("/logout") do
 end
 
 get("/upload") do
+    session[:user_folders] = db.execute("SELECT folder_name FROM folders WHERE owner_id = ?", session[:user_id])
     if session[:user_id] == nil
         redirect("/")
     end
@@ -125,8 +126,20 @@ post("/upload") do
         filename = params[:file_name]
         file = params[:file][:tempfile]
         file_type = params[:file][:type]
-        p file_type
-        p filename
+        folder_name = params[:folder]
+        public_status = params[:public]
+
+        if public_status == "on"
+            public_status = 1
+        else
+            public_status = 0
+        end
+        
+        if folder_name.downcase != "select folder"
+            folder_id = db.execute("SELECT folder_id FROM folders WHERE folder_name = ?", folder_name).first["folder_id"]
+        else
+            folder_id = 0
+        end
 
         if !db.execute("SELECT file_name FROM files WHERE file_name = ? AND owner_id = ?", filename, session[:user_id]).empty?
             redirect("/upload")
@@ -134,7 +147,7 @@ post("/upload") do
 
         time = Time.new.inspect.split(" +")[0]
         
-        db.execute("INSERT INTO files (owner_id, file_name, upload_date, last_access_date, file_type, file_size) VALUES (?, ?, ?, ?, ?, ?)", session[:user_id], filename, time, time, file_type, 0)
+        db.execute("INSERT INTO files (owner_id, file_name, upload_date, last_access_date, file_type, file_size, folder_id, public_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", session[:user_id], filename, time, time, file_type, 0, folder_id, public_status)
         file_id = db.execute("SELECT file_id FROM files WHERE owner_id = ? AND file_name = ?", session[:user_id], filename)[0]["file_id"]
         
         Dir.mkdir "./public/uploads/#{file_id}"
