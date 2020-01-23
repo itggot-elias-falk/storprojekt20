@@ -6,6 +6,7 @@
             td File name
             td File type
             td Upload date
+            td Public Status
             td Last access date
             td File size
             td 
@@ -15,6 +16,7 @@
                 td = file["file_name"].split(".")[0]
                 td = file["file_type"]
                 td = file["upload_date"].slice(0..-4)
+                td = file["public_status"]
                 td = file["last_access_date"].slice(0..-4)
                 - if file["file_size"] > 10**3 && file["file_size"] < 10**6
                     td #{(file["file_size"]/2**10).round(1)} kB

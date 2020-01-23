@@ -114,10 +114,11 @@ post("/logout") do
 end
 
 get("/upload") do
-    session[:user_folders] = db.execute("SELECT folder_name FROM folders WHERE owner_id = ?", session[:user_id])
     if session[:user_id] == nil
         redirect("/")
     end
+    session[:user_folders] = db.execute("SELECT folder_name FROM folders WHERE owner_id = ?", session[:user_id])
+    p session[:user_folders]
     slim(:upload)
 end
 
@@ -126,7 +127,7 @@ post("/upload") do
         filename = params[:file_name]
         file = params[:file][:tempfile]
         file_type = params[:file][:type]
-        folder_name = params[:folder]
+        folder_name = params[:folder].chomp
         public_status = params[:public]
 
         if public_status == "on"
@@ -134,7 +135,7 @@ post("/upload") do
         else
             public_status = 0
         end
-        
+
         if folder_name.downcase != "select folder"
             folder_id = db.execute("SELECT folder_id FROM folders WHERE folder_name = ?", folder_name).first["folder_id"]
         else
