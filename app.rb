@@ -124,7 +124,13 @@ end
 
 post("/upload") do
     if params[:file] && params[:file][:filename]
-        filename = params[:file_name]
+
+        if params[:file_name] == ""
+            filename = params[:file][:filename]
+        else
+            filename = params[:file_name] + "." + params[:file][:filename].split(".")[1]
+        end
+
         file = params[:file][:tempfile]
         file_type = params[:file][:type]
         folder_name = params[:folder].chomp
