@@ -95,6 +95,7 @@ post("/login") do
     session[:user_id] = db.execute("SELECT user_id FROM users WHERE email = ?", email)[0]["user_id"]
     session[:username] = db.execute("SELECT username FROM users WHERE email = ?", email)[0]["username"]
     session[:rank] = db.execute("SELECT rank FROM users WHERE email = ?", email)[0]["rank"].to_i
+    p session[:rank]
 
     redirect("/home")
 end
@@ -110,7 +111,6 @@ get("/home") do
     session[:public_files].each do |file|
         session[:owners] << db.execute("SELECT username FROM users WHERE user_id = ?", file["owner_id"]).first["username"]
     end
-    session[:owned_files] = db.execute("SELECT * FROM files WHERE owner_id = ?", session[:user_id])
     slim(:home)
 end
 
@@ -206,6 +206,7 @@ post("/share_file") do
 end
 
 get("/user_files") do
+    session[:owned_files] = db.execute("SELECT * FROM files WHERE owner_id = ?", session[:user_id])
     slim(:user_files)
 end
 

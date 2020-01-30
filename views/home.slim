@@ -26,7 +26,7 @@
                     form action="/download" method="post" 
                         input type="hidden" name="file_id" value="#{file["file_id"]}"
                         input type="submit" value="Download"
-                - if session[:user_id] == file["owner_id"]
+                - if session[:user_id] == file["owner_id"] || session[:rank] > 0
                     td
                         form action="/delete" method="post" 
                             input type="hidden" name="file_id" value="#{file["file_id"]}"
