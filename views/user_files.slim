@@ -1,33 +1,36 @@
 .files_home
-    h3 Public files
+    h3 Your files
     table
         tr  
             td 
             td File name
             td File type
             td Upload date
+            td Public Status
             td Last access date
             td File size
-            td Owner
             td 
-        - session[:public_files].each_with_index do |file, index|
+        - session[:owned_files].each_with_index do |file, index|
             tr.files
                 td = index + 1
                 td = file["file_name"].split(".")[0]
                 td = file["file_type"]
                 td = file["upload_date"].slice(0..-4)
+                td = file["public_status"]
                 td = file["last_access_date"].slice(0..-4)
                 - if file["file_size"] > 10**3 && file["file_size"] < 10**6
                     td #{(file["file_size"]/2**10).round(1)} kB
                 - elsif file["file_size"] > 10**6
                     td #{((file["file_size"])/2**20).round(1)} MB
-                td = session[:owners][index]
                 td
                     form action="/download" method="post" 
                         input type="hidden" name="file_id" value="#{file["file_id"]}"
                         input type="submit" value="Download"
-                - if session[:user_id] == file["owner_id"]
-                    td
-                        form action="/delete" method="post" 
-                            input type="hidden" name="file_id" value="#{file["file_id"]}"
-                            input type="submit" value="Delete"
+                td
+                    form action="/delete" method="post" 
+                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        input type="submit" value="Delete"
+                td
+                    form action="/user_files/#{file["file_id"]}" method="get"
+                        / input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        input type="submit" value="Edit"

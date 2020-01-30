@@ -38,7 +38,7 @@ get("/register") do
 end
 
 post("/register") do
-    email = params[:email]
+    email = params[:email].downcase
     username = params[:username]
     password = params[:password]
     confirm_password = params[:confirm_password]
@@ -76,7 +76,7 @@ post("/register") do
 end
 
 post("/login") do
-    email = params[:email]
+    email = params[:email].downcase
     password = params[:password]
 
     if db.execute("SELECT email FROM users WHERE email = ?", email) == []
@@ -104,6 +104,12 @@ get("/home") do
         redirect("/")
     end
 
+
+    session[:public_files] = db.execute("SELECT * FROM files WHERE public_status = ?", 1)
+    session[:owners] = []
+    session[:public_files].each do |file|
+        session[:owners] << db.execute("SELECT username FROM users WHERE user_id = ?", file["owner_id"]).first["username"]
+    end
     session[:owned_files] = db.execute("SELECT * FROM files WHERE owner_id = ?", session[:user_id])
     slim(:home)
 end
@@ -197,4 +203,12 @@ post("/share_file") do
     file_id = params[:file_id]
     db.execute("INSERT INTO shared_files (file_id, user_id)")
     redirect("/share")
+end
+
+get("/user_files") do
+    slim(:user_files)
+end
+
+get("/user_files/:file_id") do
+    slim(:edit_file)
 end
