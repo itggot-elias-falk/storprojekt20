@@ -5,10 +5,16 @@ form action="edit_file" method="post"
     p Filename
     input type="text" value="#{session[:file]["file_name"]}"
     p Public status (Currently #{session[:file]["public_status"]})
+
     select name="public_status"
         input type="text" value="#{session[:file]["public_status"]}"
     p share with user
     input type="text" placeholder="username1, username2..." name="share_with_user"
-    p unshare with user
-    p people who has access
-    input type="text" value="#{session[:users_with_access]}"
+
+    p Folder
+    select name="folder"
+        / option
+
+    / Gör punktlista som kan deleta users med access
+    / p people who has access:
+    / input type="text" value="#{session[:users_with_access]}"
