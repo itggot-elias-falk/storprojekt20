@@ -22,6 +22,14 @@ db.results_as_hash = true
 #     end
 # end
 
+def user_id_to_username(user_id)
+    usernames = []
+    user_id.each do |id|
+        usernames << db.execute("SELECT username FROM users WHERE user_id = ?", id)[0]["username"]
+    end
+    return usernames
+end
+
 get("/") do
     if session[:user_id] != 0 && session[:user_id] != nil
         redirect("/home")
@@ -162,7 +170,7 @@ post("/upload") do
         
         db.execute("INSERT INTO files (owner_id, file_name, upload_date, last_access_date, file_type, file_size, folder_id, public_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", session[:user_id], filename, time, time, file_type, 0, folder_id, public_status)
         file_id = db.execute("SELECT file_id FROM files WHERE owner_id = ? AND file_name = ?", session[:user_id], filename)[0]["file_id"]
-        
+
         Dir.mkdir "./public/uploads/#{file_id}"
         path = "./public/uploads/#{file_id}/#{filename}"
         # Write file to disk
@@ -211,5 +219,14 @@ get("/user_files") do
 end
 
 get("/user_files/:file_id") do
+    session[:file_id] = params["file_id"]
+    session[:file] = db.execute("SELECT * FROM files WHERE file_id = ?", session[:file_id])[0]
+    user_ids_with_access = db.execute("SELECT user_id FROM shared_files WHERE file_id = ?", session[:file_id])
+    usernames_with_access = user_id_to_username(user_ids_with_access)
+    session[:users_with_access] = usernames_with_access.join(", ")
     slim(:edit_file)
+end
+
+post("/update_file/:file_id") do
+
 end
