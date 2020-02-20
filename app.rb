@@ -3,10 +3,9 @@ require "slim"
 require "bcrypt"
 require "sqlite3"
 require "fileutils"
+require_relative "./model.rb"
 
 enable :sessions
-db = SQLite3::Database.new("db/cloud_db.db")
-db.results_as_hash = true
 
 # before do
 
@@ -21,6 +20,11 @@ db.results_as_hash = true
 #         end
 #     end
 # end
+
+after do
+    session[:last_route] = request.path
+    p session[:last_route]
+end
 
 def user_id_to_username(user_id)
     usernames = []
@@ -51,7 +55,7 @@ post("/register") do
     password = params[:password]
     confirm_password = params[:confirm_password]
 
-    if db.execute("SELECT email from users WHERE email = ?", email) != []
+    if email_exist(email)
         session[:register_username] = username
         session[:register_error] = "email"
         redirect("/register")
@@ -87,23 +91,22 @@ post("/login") do
     email = params[:email].downcase
     password = params[:password]
 
-    if db.execute("SELECT email FROM users WHERE email = ?", email) == []
+    if !validate_email(email)
         session[:login_error] = "email"
         redirect("/")
     end
 
-    password_for_email = db.execute("SELECT password_digest FROM users WHERE email = ?", email)[0]["password_digest"]
-
-    if BCrypt::Password.new(password_for_email) != password
+    if validate_password(email, password)
         session[:login_error] = "password"
         redirect("/")
     end
 
     session[:email] = email
-    session[:user_id] = db.execute("SELECT user_id FROM users WHERE email = ?", email)[0]["user_id"]
-    session[:username] = db.execute("SELECT username FROM users WHERE email = ?", email)[0]["username"]
-    session[:rank] = db.execute("SELECT rank FROM users WHERE email = ?", email)[0]["rank"].to_i
-    p session[:rank]
+
+    user_data = get_user_data(email)
+    session[:user_id] = user_data["user_id"]
+    session[:username] = user_data["username"]
+    session[:rank] = user_data["rank"]
 
     redirect("/home")
 end
@@ -127,7 +130,7 @@ post("/logout") do
     redirect("/")
 end
 
-get("/upload") do
+get("/file/upload") do
     if session[:user_id] == nil
         redirect("/")
     end
@@ -136,7 +139,25 @@ get("/upload") do
     slim(:upload)
 end
 
-post("/upload") do
+# def get_all_file_user_data(user_id)
+#     user_data = db.execute("SELECT * FROM users WHERE user_id = ?", user_id).first
+#     user_files = db.execute("SELECT * FROM files WHERE owner_id = ?", user_id).first
+#     user_folders = db.execute("SELECT * FROM folders WHERE owner_id = ?", user_id).first
+#     user_shared_files = db.execute("SELECT * FROM shared_files WHERE user_id = ?", user_id).first
+#     all_data = {user_data: user_data, user_files: user_files, user_folders: user_folders, user_shared_files: user_shared_files}
+#     p all_data
+#     return all_data
+# end
+
+def create_file(file_id, filename, file)
+    Dir.mkdir "./public/uploads/#{file_id}"
+    path = "./public/uploads/#{file_id}/#{filename}"
+    File.open(path, 'wb') do |f|
+        f.write(file.read)
+    end
+end
+
+post("/file/upload") do
     if params[:file] && params[:file][:filename]
 
         if params[:file_name] == ""
@@ -171,12 +192,7 @@ post("/upload") do
         db.execute("INSERT INTO files (owner_id, file_name, upload_date, last_access_date, file_type, file_size, folder_id, public_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", session[:user_id], filename, time, time, file_type, 0, folder_id, public_status)
         file_id = db.execute("SELECT file_id FROM files WHERE owner_id = ? AND file_name = ?", session[:user_id], filename)[0]["file_id"]
 
-        Dir.mkdir "./public/uploads/#{file_id}"
-        path = "./public/uploads/#{file_id}/#{filename}"
-        # Write file to disk
-        File.open(path, 'wb') do |f|
-            f.write(file.read)
-        end
+        create_file(file_id, filename, file)
 
         file_size = File.size("./public/uploads/#{file_id}/#{filename}")
         db.execute("UPDATE files SET file_size = ? WHERE file_id = ?", file_size, file_id)
@@ -184,28 +200,27 @@ post("/upload") do
     redirect("/home")
 end
 
-post("/download") do
+post("/file/download/:file_id") do
     file_id = params[:file_id]
     filename = db.execute("SELECT file_name FROM files WHERE file_id = ?", file_id)[0]["file_name"]
     time = Time.new.inspect.split(" +")[0]
-
     db.execute("UPDATE files SET last_access_date = ? WHERE file_id = ?", time, file_id)
     send_file("./public/uploads/#{file_id}/#{filename}", :filename=>filename, :type=>"application/octet-stream")
     redirect("/home")
 end
 
-post("/delete") do
+post("/file/delete/:file_id") do
     file_id = params[:file_id]
     FileUtils.remove_dir("./public/uploads/#{file_id}")
     db.execute("DELETE FROM files WHERE file_id = ?", file_id)
-    redirect("/home")
+    redirect("#{session[:last_route]}")
 end
 
 get("/user") do
     slim(:user)
 end
 
-post("/share_file") do
+post("/file/share/:file_id") do
     share_username = params[:username]
     user_id = db.execute("SELECT user_id FROM users WHERE username = ?", share_username).first["user_id"]
     file_id = params[:file_id]

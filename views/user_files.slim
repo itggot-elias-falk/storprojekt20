@@ -27,10 +27,8 @@
                         input type="hidden" name="file_id" value="#{file["file_id"]}"
                         input type="submit" value="Download"
                 td
-                    form action="/delete" method="post" 
-                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                    form action="/file/delete/#{file["file_id"]}" method="post" 
                         input type="submit" value="Delete"
                 td
                     form action="/user_files/#{file["file_id"]}" method="get"
-                        / input type="hidden" name="file_id" value="#{file["file_id"]}"
                         input type="submit" value="Edit"

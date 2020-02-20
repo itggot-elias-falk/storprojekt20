@@ -23,11 +23,9 @@
                     td #{((file["file_size"])/2**20).round(1)} MB
                 td = session[:owners][index]
                 td
-                    form action="/download" method="post" 
-                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                    form action="/file/download/#{file["file_id"]}" method="post"
                         input type="submit" value="Download"
                 - if session[:user_id] == file["owner_id"] || session[:rank] > 0
                     td
-                        form action="/delete" method="post" 
-                            input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        form action="/file/delete/#{file["file_id"]}" method="post"
                             input type="submit" value="Delete"
