@@ -91,7 +91,7 @@ post("/login") do
     email = params[:email].downcase
     password = params[:password]
 
-    if !validate_email(email)
+    if !email_exist(email)
         session[:login_error] = "email"
         redirect("/")
     end
@@ -116,11 +116,10 @@ get("/home") do
         redirect("/")
     end
 
-
-    session[:public_files] = db.execute("SELECT * FROM files WHERE public_status = ?", 1)
+    session[:public_files] = get_all_public_files()
     session[:owners] = []
     session[:public_files].each do |file|
-        session[:owners] << db.execute("SELECT username FROM users WHERE user_id = ?", file["owner_id"]).first["username"]
+        session[:owners] << get_username_for_id(file["owner_id"])
     end
     slim(:home)
 end
@@ -134,7 +133,7 @@ get("/file/upload") do
     if session[:user_id] == nil
         redirect("/")
     end
-    session[:user_folders] = db.execute("SELECT folder_name FROM folders WHERE owner_id = ?", session[:user_id])
+    session[:user_folders] = get_all_folderdata_for_user_id(session[:user_id])
     p session[:user_folders]
     slim(:upload)
 end
@@ -178,33 +177,31 @@ post("/file/upload") do
         end
 
         if folder_name.downcase != "select folder"
-            folder_id = db.execute("SELECT folder_id FROM folders WHERE folder_name = ?", folder_name).first["folder_id"]
+            folder_id = get_folder_id_for_folder_name(folder_name)
         else
             folder_id = 0
         end
 
-        if !db.execute("SELECT file_name FROM files WHERE file_name = ? AND owner_id = ?", filename, session[:user_id]).empty?
+        if file_name_exist(filename, session[:user_id])
             redirect("/upload")
         end
 
         time = Time.new.inspect.split(" +")[0]
         
-        db.execute("INSERT INTO files (owner_id, file_name, upload_date, last_access_date, file_type, file_size, folder_id, public_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", session[:user_id], filename, time, time, file_type, 0, folder_id, public_status)
-        file_id = db.execute("SELECT file_id FROM files WHERE owner_id = ? AND file_name = ?", session[:user_id], filename)[0]["file_id"]
-
+        insert_file_into_db(session[:user_id],filename,time,time,file_type,0,folder_id,public_status)
+        file_id = get_single_file_id(filename, session[:user_id])
         create_file(file_id, filename, file)
-
         file_size = File.size("./public/uploads/#{file_id}/#{filename}")
-        db.execute("UPDATE files SET file_size = ? WHERE file_id = ?", file_size, file_id)
+        update_file_size(file_id, file_size)
     end
     redirect("/home")
 end
 
 post("/file/download/:file_id") do
     file_id = params[:file_id]
-    filename = db.execute("SELECT file_name FROM files WHERE file_id = ?", file_id)[0]["file_name"]
+    filename = get_file_data()["file_name"]
     time = Time.new.inspect.split(" +")[0]
-    db.execute("UPDATE files SET last_access_date = ? WHERE file_id = ?", time, file_id)
+    update_last_access(file_id, time)
     send_file("./public/uploads/#{file_id}/#{filename}", :filename=>filename, :type=>"application/octet-stream")
     redirect("/home")
 end
