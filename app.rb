@@ -26,13 +26,7 @@ after do
     p session[:last_route]
 end
 
-def user_id_to_username(user_id)
-    usernames = []
-    user_id.each do |id|
-        usernames << db.execute("SELECT username FROM users WHERE user_id = ?", id)[0]["username"]
-    end
-    return usernames
-end
+
 
 get("/") do
     if session[:user_id] != 0 && session[:user_id] != nil
@@ -61,7 +55,7 @@ post("/register") do
         redirect("/register")
     end
 
-    if db.execute("SELECT username_downcase from users WHERE username_downcase = ?", username.downcase) != []
+    if username_exist(username)
         session[:register_email] = email
         session[:register_error] = "username"
         redirect("/register")
@@ -76,13 +70,12 @@ post("/register") do
     end
 
     password_digest = BCrypt::Password.create(password)
-    db.execute("INSERT INTO users (email, username, password_digest, rank, username_downcase) VALUES (?, ?, ?, ?, ?)", email, username, password_digest, 0, username.downcase)
-    
+    register_user(email, username, password_digest, 0, username.downcase)
     session[:username] = username
     session[:email] = email
-    session[:user_id] = db.execute("SELECT user_id FROM users WHERE username = ?", username)[0]["user_id"]
+    session[:user_id] = get_user_id_for_username(username)
     session[:rank] = 0
-    db.execute("INSERT INTO folders (owner_id, folder_name) VALUES (?, ?)", session[:user_id], session[:user_id])
+    # db.execute("INSERT INTO folders (owner_id, folder_name) VALUES (?, ?)", session[:user_id], session[:user_id])
 
     redirect("/home")
 end
@@ -91,22 +84,30 @@ post("/login") do
     email = params[:email].downcase
     password = params[:password]
 
+    p "checking email"
     if !email_exist(email)
         session[:login_error] = "email"
         redirect("/")
     end
 
-    if validate_password(email, password)
+
+    p "checking password"
+    if !validate_password(email, password)
         session[:login_error] = "password"
         redirect("/")
     end
 
+    p "login success"
+
     session[:email] = email
 
     user_data = get_user_data(email)
-    session[:user_id] = user_data["user_id"]
-    session[:username] = user_data["username"]
-    session[:rank] = user_data["rank"]
+    session[:user_id] = user_data[:user_id]
+    session[:username] = user_data[:username]
+    session[:rank] = user_data[:rank]
+    p session[:user_id] = user_data[:user_id]
+    p session[:username] = user_data[:username]
+    p session[:rank] = user_data[:rank]
 
     redirect("/home")
 end
@@ -199,7 +200,7 @@ end
 
 post("/file/download/:file_id") do
     file_id = params[:file_id]
-    filename = get_file_data()["file_name"]
+    filename = get_file_data(file_id)["file_name"]
     time = Time.new.inspect.split(" +")[0]
     update_last_access(file_id, time)
     send_file("./public/uploads/#{file_id}/#{filename}", :filename=>filename, :type=>"application/octet-stream")
@@ -209,7 +210,7 @@ end
 post("/file/delete/:file_id") do
     file_id = params[:file_id]
     FileUtils.remove_dir("./public/uploads/#{file_id}")
-    db.execute("DELETE FROM files WHERE file_id = ?", file_id)
+    delete_file(file_id)
     redirect("#{session[:last_route]}")
 end
 
@@ -219,26 +220,82 @@ end
 
 post("/file/share/:file_id") do
     share_username = params[:username]
-    user_id = db.execute("SELECT user_id FROM users WHERE username = ?", share_username).first["user_id"]
+    user_id = get_user_id_for_username()
     file_id = params[:file_id]
-    db.execute("INSERT INTO shared_files (file_id, user_id)")
+    create_file_access(file_id, user_id)
     redirect("/share")
 end
 
 get("/user_files") do
-    session[:owned_files] = db.execute("SELECT * FROM files WHERE owner_id = ?", session[:user_id])
-    slim(:user_files)
+    owned_files = get_all_owned_files(session[:user_id])
+
+    # Inner join?
+    shared_files_ids = get_all_shared_files_id(session[:user_id])
+    shared_files = []
+    shared_files_ids.each do |file_id|
+        shared_files << get_all_file_data(file_id["file_id"])[0]
+    end
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p "Shared files"
+    p shared_files
+ 
+
+    slim(:user_files, locals: {shared_files: shared_files, owned_files: owned_files})
 end
 
 get("/user_files/:file_id") do
     session[:file_id] = params["file_id"]
-    session[:file] = db.execute("SELECT * FROM files WHERE file_id = ?", session[:file_id])[0]
-    user_ids_with_access = db.execute("SELECT user_id FROM shared_files WHERE file_id = ?", session[:file_id])
-    usernames_with_access = user_id_to_username(user_ids_with_access)
+    session[:file] = get_file_data(session[:file_id])
+    user_ids_with_access = get_users_with_access(session[:file_id])
+    
+    usernames = []
+    user_ids_with_access.each do |user_id|
+        usernames << user_id_to_username(user_id["user_id"])[0]["username"]
+    end
+
+    usernames_with_access = usernames
+    session[:user_folders] = get_all_folderdata_for_user_id(session[:user_id])
+
+    usernames_with_access = []
+    user_ids_with_access.each do |user_id|
+        usernames_with_access << get_username_for_id(user_id["user_id"])
+    end
+
     session[:users_with_access] = usernames_with_access.join(", ")
     slim(:edit_file)
 end
 
 post("/update_file/:file_id") do
+    filename = params[:file_name]
+    public_status = params[:public_status]
+    share_usernames = params[:share_usernames].split(", ")
+    folder_id = params[:folder]
+    file_id = params[:file_id]
 
+    p folder_id
+
+    folder_id = 0
+
+    if share_usernames
+        share_usernames.each do |username|
+            # TODO: make it work with lowercase usernames
+            user_id = get_user_id_for_username(username)
+            if user_id != []
+                share_file_with_user(user_id, file_id)
+            end
+        end
+    end
+
+    update_file(file_id, filename, public_status, folder_id)
+
+
+    redirect("#{session[:last_route]}")
 end

@@ -10,7 +10,7 @@
             td Last access date
             td File size
             td 
-        - session[:owned_files].each_with_index do |file, index|
+        - owned_files.each_with_index do |file, index|
             tr.files
                 td = index + 1
                 td = file["file_name"].split(".")[0]
@@ -32,3 +32,30 @@
                 td
                     form action="/user_files/#{file["file_id"]}" method="get"
                         input type="submit" value="Edit"
+    h3 Shared files
+    table
+        tr  
+            td 
+            td File name
+            td File type
+            td Upload date
+            td Public Status
+            td Last access date
+            td File size
+            td 
+        - shared_files.each_with_index do |file, index|
+                tr.files
+                    td = index + 1
+                    td = file["file_name"].split(".")[0]
+                    td = file["file_type"]
+                    td = file["upload_date"].slice(0..-4)
+                    td = file["public_status"]
+                    td = file["last_access_date"].slice(0..-4)
+                    - if file["file_size"] > 10**3 && file["file_size"] < 10**6
+                        td #{(file["file_size"]/2**10).round(1)} kB
+                    - elsif file["file_size"] > 10**6
+                        td #{((file["file_size"])/2**20).round(1)} MB
+                    td
+                        form action="/file/download/#{file["file_id"]}" method="post" 
+                            input type="hidden" name="file_id" value="#{file["file_id"]}"
+                            input type="submit" value="Download"

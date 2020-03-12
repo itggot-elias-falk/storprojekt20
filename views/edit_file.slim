@@ -1,21 +1,34 @@
-h1 Edit #{session[:file_name]}
+h1 Edit #{session[:file]["file_name"]}
 
-form action="edit_file" method="post"
+form action="/update_file/#{params[:file_id]}" method="post"
 
     p Filename
-    input type="text" value="#{session[:file]["file_name"]}"
-    p Public status (Currently #{session[:file]["public_status"]})
+    input type="text" value="#{session[:file]["file_name"]}" name="file_name"
+    - if session[:file]["public_status"] == 1
+        p Public status (Currently set public)
+        select name="public_status"
+            option value="1" Set public
+            option value="0" Set private
+    - else
+        p Public status (Currently set private)
+        select name="public_status"
+            option value="0" Set private
+            option value="1" Set public
 
-    select name="public_status"
-        input type="text" value="#{session[:file]["public_status"]}"
     p share with user
-    input type="text" placeholder="username1, username2..." name="share_with_user"
+    input type="text" placeholder="username1, username2..." name="share_usernames"
 
     p Folder
-    select name="folder"
-        
-    a href="/create_folder"
+    select name="folder" 
+        option choose folder
+        - session[:user_folders].each do |folder|
+            option value="#{folder["folder_name"]}" = folder["folder_name"]
 
+    br
+    a href="/create_folder" Create new folder
+    br
+
+    input type="submit" value="Update file"
     / Gör punktlista som kan deleta users med access
     / p people who has access:
     / input type="text" value="#{session[:users_with_access]}"
