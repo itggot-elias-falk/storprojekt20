@@ -235,18 +235,6 @@ get("/user_files") do
     shared_files_ids.each do |file_id|
         shared_files << get_all_file_data(file_id["file_id"])[0]
     end
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p "Shared files"
-    p shared_files
- 
 
     slim(:user_files, locals: {shared_files: shared_files, owned_files: owned_files})
 end
@@ -269,8 +257,7 @@ get("/user_files/:file_id") do
         usernames_with_access << get_username_for_id(user_id["user_id"])
     end
 
-    session[:users_with_access] = usernames_with_access.join(", ")
-    slim(:edit_file)
+    slim(:edit_file, locals:{users_with_access: usernames_with_access})
 end
 
 post("/update_file/:file_id") do

@@ -29,6 +29,9 @@ form action="/update_file/#{params[:file_id]}" method="post"
     br
 
     input type="submit" value="Update file"
-    / Gör punktlista som kan deleta users med access
-    / p people who has access:
-    / input type="text" value="#{session[:users_with_access]}"
+
+
+    p users with access
+    ul
+        - users_with_access.each do |username|
+            li = username
