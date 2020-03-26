@@ -36,7 +36,7 @@ get("/") do
     session[:email] = ""
     session[:user_id] = 0
     session[:rank] = 0
-    slim(:index)
+    slim(:"users/index")
 end
 
 get("/register") do
@@ -105,10 +105,6 @@ post("/login") do
     session[:user_id] = user_data[:user_id]
     session[:username] = user_data[:username]
     session[:rank] = user_data[:rank]
-    p session[:user_id] = user_data[:user_id]
-    p session[:username] = user_data[:username]
-    p session[:rank] = user_data[:rank]
-
     redirect("/home")
 end
 
@@ -136,7 +132,7 @@ get("/file/upload") do
     end
     session[:user_folders] = get_all_folderdata_for_user_id(session[:user_id])
     p session[:user_folders]
-    slim(:upload)
+    slim(:"files/upload")
 end
 
 # def get_all_file_user_data(user_id)
@@ -215,7 +211,7 @@ post("/file/delete/:file_id") do
 end
 
 get("/user") do
-    slim(:user)
+    slim(:"users/edit")
 end
 
 post("/file/share/:file_id") do
@@ -236,7 +232,7 @@ get("/user_files") do
         shared_files << get_all_file_data(file_id["file_id"])[0]
     end
 
-    slim(:user_files, locals: {shared_files: shared_files, owned_files: owned_files})
+    slim(:"files/user_files", locals: {shared_files: shared_files, owned_files: owned_files})
 end
 
 get("/user_files/:file_id") do
@@ -257,7 +253,7 @@ get("/user_files/:file_id") do
         usernames_with_access << get_username_for_id(user_id["user_id"])
     end
 
-    slim(:edit_file, locals:{users_with_access: usernames_with_access})
+    slim(:"files/edit_file", locals:{users_with_access: usernames_with_access})
 end
 
 post("/update_file/:file_id") do
@@ -275,14 +271,14 @@ post("/update_file/:file_id") do
         share_usernames.each do |username|
             # TODO: make it work with lowercase usernames
             user_id = get_user_id_for_username(username)
-            if user_id != []
+            if user_id != [] && !already_shared(user_id, file_id)
                 share_file_with_user(user_id, file_id)
+            else
+                session[:share_error] = "file already shared with that user"
             end
         end
     end
 
     update_file(file_id, filename, public_status, folder_id)
-
-
     redirect("#{session[:last_route]}")
 end

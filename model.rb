@@ -139,3 +139,10 @@ end
 def get_all_file_data(file_id)
     return $db.execute("SELECT * FROM files WHERE file_id = ?", file_id)
 end
+
+def already_shared(user_id, file_id)
+    if $db.execute("SELECT * FROM shared_files WHERE file_id = ? AND user_id = ?", file_id, user_id) != []
+        return true
+    end
+    return false
+end
