@@ -1,10 +1,10 @@
-h1 Edit #{session[:file]["file_name"]}
+h1 Edit #{file["file_name"]}
 
 form action="/update_file/#{params[:file_id]}" method="post"
 
     p Filename
-    input type="text" value="#{session[:file]["file_name"]}" name="file_name"
-    - if session[:file]["public_status"] == 1
+    input type="text" value="#{file["file_name"]}" name="file_name"
+    - if file["public_status"] == 1
         p Public status (Currently set public)
         select name="public_status"
             option value="1" Set public
@@ -21,11 +21,11 @@ form action="/update_file/#{params[:file_id]}" method="post"
     p Folder
     select name="folder" 
         option choose folder
-        - session[:user_folders].each do |folder|
-            option value="#{folder["folder_name"]}" = folder["folder_name"]
+        - user_folders.each do |folder|
+            option value="#{folder["folder_id"]}" = folder["folder_name"]
 
     br
-    a href="/create_folder" Create new folder
+    a href="/folders/new" Create new folder
     br
 
     input type="submit" value="Update file"
@@ -33,5 +33,9 @@ form action="/update_file/#{params[:file_id]}" method="post"
 
     p users with access
     ul
-        - users_with_access.each do |username|
-            li = username
+    - users_with_access.each do |user|
+        li
+            form action="files/#{file_id}/unshare/#{user["user_id"]}"
+                p = user["username"]
+                input type="submit" value="unshare"
+

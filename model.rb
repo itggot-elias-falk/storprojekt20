@@ -103,7 +103,12 @@ def delete_file(file_id)
 end
 
 def get_user_id_for_username(username)
-    return $db.execute("SELECT user_id FROM users WHERE username = ?", username).first["user_id"]
+    user_id = $db.execute("SELECT user_id FROM users WHERE username = ?", username)
+    if user_id != []
+        return user_id.first["user_id"]
+    else
+        return false
+    end
 end
 
 def create_file_access(file_id, user_id)
@@ -145,4 +150,12 @@ def already_shared(user_id, file_id)
         return true
     end
     return false
+end
+
+def create_folder(folder_name, user_id)
+    $db.execute("INSERT INTO folders (folder_name, owner_id) VALUES (?,?)", folder_name, user_id)
+end
+
+def get_all_user_data(user_id)
+    return $db.execute("SELECT * FROM users WHERE user_id = ?", user_id)
 end

@@ -236,24 +236,21 @@ get("/user_files") do
 end
 
 get("/user_files/:file_id") do
-    session[:file_id] = params["file_id"]
-    session[:file] = get_file_data(session[:file_id])
-    user_ids_with_access = get_users_with_access(session[:file_id])
+    file_id = params["file_id"]
+    file = get_file_data(file_id)
+    user_ids_with_access = get_users_with_access(file_id)
     
     usernames = []
-    user_ids_with_access.each do |user_id|
-        usernames << user_id_to_username(user_id["user_id"])[0]["username"]
+    users_with_access = []
+    if user_ids_with_access != []
+        user_ids_with_access.each do |user_id|
+            users_with_access << get_all_user_data(user_id["user_id"]).first
+        end
     end
 
-    usernames_with_access = usernames
-    session[:user_folders] = get_all_folderdata_for_user_id(session[:user_id])
+    user_folders = get_all_folderdata_for_user_id(session[:user_id])
 
-    usernames_with_access = []
-    user_ids_with_access.each do |user_id|
-        usernames_with_access << get_username_for_id(user_id["user_id"])
-    end
-
-    slim(:"files/edit_file", locals:{users_with_access: usernames_with_access})
+    slim(:"files/edit", locals:{file_id: file_id, file: file, users_with_access: users_with_access, user_folders: user_folders})
 end
 
 post("/update_file/:file_id") do
@@ -263,9 +260,8 @@ post("/update_file/:file_id") do
     folder_id = params[:folder]
     file_id = params[:file_id]
 
-    p folder_id
 
-    folder_id = 0
+    p folder_id
 
     if share_usernames
         share_usernames.each do |username|
@@ -280,5 +276,15 @@ post("/update_file/:file_id") do
     end
 
     update_file(file_id, filename, public_status, folder_id)
+    redirect("#{session[:last_route]}")
+end
+
+get("/folders/new") do
+    slim(:"folders/new")
+end
+
+post("/folders/create") do
+    folder_name = params[:folder_name]
+    create_folder(folder_name, session[:user_id])
     redirect("#{session[:last_route]}")
 end
