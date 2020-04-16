@@ -1,0 +1,6 @@
+form action="/folders/select" method="post"
+    select name="folder"
+        - folders.each do |folder|
+            option value="#{folder["folder_id"]}" = folder["folder_name"] 
+    input type="submit" value="select folder"
+a href="/folders/new" create new folder

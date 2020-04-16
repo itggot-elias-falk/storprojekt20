@@ -288,3 +288,29 @@ post("/folders/create") do
     create_folder(folder_name, session[:user_id])
     redirect("#{session[:last_route]}")
 end
+
+post("/files/:file_id/unshare/:user_id") do
+    file_id = params[:file_id]
+    user_id = params[:user_id]
+    unshare_file(file_id, user_id)
+    redirect("#{session[:last_route]}")
+end
+
+get("/folders") do
+    folders = get_all_folderdata_for_user_id(session[:user_id])
+    p folders
+    slim(:"folders/select", locals:{folders: folders})
+end
+
+post("/folders/select") do
+    folder_id = params[:folder]
+    redirect("/folders/#{folder_id}")
+end
+
+get("/folders/:folder_id") do
+    folders = get_all_folderdata_for_user_id(session[:user_id])
+    folder_id = params[:folder_id]
+    files = get_all_files_in_folder(folder_id)
+    current_folder = get_all_folderdata_for_folder_id(folder_id).first
+    slim(:"folders/show", locals:{files: files, current_folder: current_folder, folders: folders})
+end

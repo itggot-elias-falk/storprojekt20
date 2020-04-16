@@ -6,3 +6,5 @@ gem "rerun"
 gem "bcrypt"
 gem "fileutils"
 gem "slim"
+
+gem "yard-sinatra", git: "https://github.com/chrisb/yard-sinatra"

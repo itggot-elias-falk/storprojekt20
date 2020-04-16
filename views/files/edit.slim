@@ -31,11 +31,11 @@ form action="/update_file/#{params[:file_id]}" method="post"
     input type="submit" value="Update file"
 
 
-    p users with access
-    ul
+    p <b>users with access</b>
     - users_with_access.each do |user|
-        li
-            form action="files/#{file_id}/unshare/#{user["user_id"]}"
-                p = user["username"]
-                input type="submit" value="unshare"
+        / Om inte denna tomma form finns laddas inte nästa form wtf??
+        form
+        form action="/files/#{file_id}/unshare/#{user["user_id"]}" method="post"
+            p = user["username"]
+            input type="submit" value="unshare"
 

@@ -159,3 +159,15 @@ end
 def get_all_user_data(user_id)
     return $db.execute("SELECT * FROM users WHERE user_id = ?", user_id)
 end
+
+def unshare_file(file_id, user_id)
+    $db.execute("DELETE FROM shared_files WHERE file_id = ? AND user_id = ?", file_id, user_id)
+end
+
+def get_all_files_in_folder(folder_id)
+    return $db.execute("SELECT * FROM files WHERE folder_id = ?", folder_id)
+end
+
+def get_all_folderdata_for_folder_id(folder_id)
+    return $db.execute("SELECT * FROM folders WHERE folder_id = ?", folder_id)
+end

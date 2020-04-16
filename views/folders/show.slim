@@ -1,0 +1,42 @@
+form action="/folders/select" method="post"
+    select name="folder"
+        option value="#{params["folder_id"]}" = current_folder["folder_name"]
+        - folders.each do |folder|
+            - if folder["folder_id"] != current_folder["folder_id"]
+                option value="#{folder["folder_id"]}" = folder["folder_name"] 
+    input type="submit" value="select folder"
+
+.files_home
+    h3 = current_folder[:folder_name]
+    table
+        tr  
+            td 
+            td File name
+            td File type
+            td Upload date
+            td Public Status
+            td Last access date
+            td File size
+            td 
+        - files.each_with_index do |file, index|
+            tr.files
+                td = index + 1
+                td = file["file_name"].split(".")[0]
+                td = file["file_type"]
+                td = file["upload_date"].slice(0..-4)
+                td = file["public_status"]
+                td = file["last_access_date"].slice(0..-4)
+                - if file["file_size"] > 10**3 && file["file_size"] < 10**6
+                    td #{(file["file_size"]/2**10).round(1)} kB
+                - elsif file["file_size"] > 10**6
+                    td #{((file["file_size"])/2**20).round(1)} MB
+                td
+                    form action="/download" method="post" 
+                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                        input type="submit" value="Download"
+                td
+                    form action="/file/delete/#{file["file_id"]}" method="post" 
+                        input type="submit" value="Delete"
+                td
+                    form action="/user_files/#{file["file_id"]}" method="get"
+                        input type="submit" value="Edit"
