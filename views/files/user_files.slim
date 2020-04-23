@@ -23,8 +23,7 @@
                 - elsif file["file_size"] > 10**6
                     td #{((file["file_size"])/2**20).round(1)} MB
                 td
-                    form action="/download" method="post" 
-                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                    form action="/file/download/#{file["file_id"]}" method="post"
                         input type="submit" value="Download"
                 td
                     form action="/file/delete/#{file["file_id"]}" method="post" 
@@ -45,6 +44,7 @@
                 td Public Status
                 td Last access date
                 td File size
+                td Owner
                 td 
             - shared_files.each_with_index do |file, index|
                     tr.files
@@ -58,6 +58,7 @@
                             td #{(file["file_size"]/2**10).round(1)} kB
                         - elsif file["file_size"] > 10**6
                             td #{((file["file_size"])/2**20).round(1)} MB
+                        td = file["username"]
                         td
                             form action="/file/download/#{file["file_id"]}" method="post" 
                                 input type="hidden" name="file_id" value="#{file["file_id"]}"

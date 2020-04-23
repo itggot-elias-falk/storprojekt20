@@ -10,7 +10,7 @@
             td File size
             td Owner
             td 
-        - session[:public_files].each_with_index do |file, index|
+        - public_files.each_with_index do |file, index|
             tr.files
                 td = index + 1
                 td = file["file_name"].split(".")[0]
@@ -21,7 +21,7 @@
                     td #{(file["file_size"]/2**10).round(1)} kB
                 - elsif file["file_size"] > 10**6
                     td #{((file["file_size"])/2**20).round(1)} MB
-                td = session[:owners][index]
+                td = file["username"]
                 td
                     form action="/file/download/#{file["file_id"]}" method="post"
                         input type="submit" value="Download"

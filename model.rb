@@ -45,7 +45,10 @@ def register_user(email, username, password_digest, rank, username_downcase)
 end
 
 def get_all_public_files()
-    return $db.execute("SELECT * FROM files WHERE public_status = ?", 1)
+    return $db.execute("SELECT * 
+        FROM files 
+        INNER JOIN users ON files.owner_id = users.user_id 
+        WHERE public_status = ?", 1)
 end
 
 def get_username_for_id(user_id)
@@ -99,7 +102,6 @@ end
 
 def delete_file(file_id)
     $db.execute("DELETE FROM files WHERE file_id = ?", file_id)
-    $db.execute("DELETE FROM shared_files WHERE file_id = ?", file_id)
 end
 
 def get_user_id_for_username(username)
@@ -136,13 +138,19 @@ def update_file(file_id, filename, public_status, folder_id)
     $db.execute("UPDATE files SET file_name = ?, public_status = ?, folder_id = ? WHERE file_id = ?", filename, public_status, folder_id, file_id)
 end
 
-def get_all_shared_files_id(user_id)
-
-    return $db.execute("SELECT file_id FROM shared_files WHERE user_id = ?", user_id)
+def get_all_shared_files_for_user(user_id)
+    return $db.execute("SELECT * 
+        FROM files 
+        INNER JOIN shared_files ON files.file_id = shared_files.file_id
+        INNER JOIN users ON files.owner_id = users.user_id
+        WHERE shared_files.user_id = ?", user_id)
 end
 
 def get_all_file_data(file_id)
-    return $db.execute("SELECT * FROM files WHERE file_id = ?", file_id)
+    return $db.execute("SELECT * 
+        FROM files 
+        INNER JOIN users ON files.owner_id = users.user_id 
+        WHERE file_id = ?", file_id)
 end
 
 def already_shared(user_id, file_id)

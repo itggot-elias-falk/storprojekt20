@@ -314,3 +314,8 @@ div.file-options input[type="checkbox"] {
 .file-upload-button {
     size: 60;
 }
+
+div.edit-box {
+    max-width: 600px;
+    margin: 0 auto;
+}

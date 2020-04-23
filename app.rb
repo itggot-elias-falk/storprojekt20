@@ -7,19 +7,16 @@ require_relative "./model.rb"
 
 enable :sessions
 
-# before do
+before do
+    path = request.path_info
+    p path
+    p session[:user_id]
 
-#     p request.path_info
-
-#     path = request.path_info
-
-#     if session[:user_id] == nil || session[:user_id] == 0
-#         session[:user_id]
-#         if path != "/"
-#             redirect("/")
-#         end
-#     end
-# end
+    if (session[:user_id] == nil || session[:user_id] == 0) && (path != "/" && path != "/register" && path != "/home" && path != "/login")
+        p "redirecting"
+        redirect("/")
+    end
+end
 
 after do
     session[:last_route] = request.path
@@ -40,7 +37,7 @@ get("/") do
 end
 
 get("/register") do
-    slim(:register)
+    slim(:"users/register")
 end
 
 post("/register") do
@@ -90,7 +87,6 @@ post("/login") do
         redirect("/")
     end
 
-
     p "checking password"
     if !validate_password(email, password)
         session[:login_error] = "password"
@@ -100,7 +96,6 @@ post("/login") do
     p "login success"
 
     session[:email] = email
-
     user_data = get_user_data(email)
     session[:user_id] = user_data[:user_id]
     session[:username] = user_data[:username]
@@ -113,12 +108,8 @@ get("/home") do
         redirect("/")
     end
 
-    session[:public_files] = get_all_public_files()
-    session[:owners] = []
-    session[:public_files].each do |file|
-        session[:owners] << get_username_for_id(file["owner_id"])
-    end
-    slim(:home)
+    public_files = get_all_public_files()
+    slim(:home, locals:{public_files: public_files})
 end
 
 post("/logout") do
@@ -130,20 +121,9 @@ get("/file/upload") do
     if session[:user_id] == nil
         redirect("/")
     end
-    session[:user_folders] = get_all_folderdata_for_user_id(session[:user_id])
-    p session[:user_folders]
-    slim(:"files/upload")
+    user_folders = get_all_folderdata_for_user_id(session[:user_id])
+    slim(:"files/upload", locals: {user_folders: user_folders})
 end
-
-# def get_all_file_user_data(user_id)
-#     user_data = db.execute("SELECT * FROM users WHERE user_id = ?", user_id).first
-#     user_files = db.execute("SELECT * FROM files WHERE owner_id = ?", user_id).first
-#     user_folders = db.execute("SELECT * FROM folders WHERE owner_id = ?", user_id).first
-#     user_shared_files = db.execute("SELECT * FROM shared_files WHERE user_id = ?", user_id).first
-#     all_data = {user_data: user_data, user_files: user_files, user_folders: user_folders, user_shared_files: user_shared_files}
-#     p all_data
-#     return all_data
-# end
 
 def create_file(file_id, filename, file)
     Dir.mkdir "./public/uploads/#{file_id}"
@@ -225,13 +205,8 @@ end
 get("/user_files") do
     owned_files = get_all_owned_files(session[:user_id])
 
-    # Inner join?
-    shared_files_ids = get_all_shared_files_id(session[:user_id])
-    shared_files = []
-    shared_files_ids.each do |file_id|
-        shared_files << get_all_file_data(file_id["file_id"])[0]
-    end
-
+    shared_files = get_all_shared_files_for_user(session[:user_id])
+    p shared_files
     slim(:"files/user_files", locals: {shared_files: shared_files, owned_files: owned_files})
 end
 
@@ -260,14 +235,13 @@ post("/update_file/:file_id") do
     folder_id = params[:folder]
     file_id = params[:file_id]
 
-
-    p folder_id
-
     if share_usernames
         share_usernames.each do |username|
             # TODO: make it work with lowercase usernames
             user_id = get_user_id_for_username(username)
-            if user_id != [] && !already_shared(user_id, file_id)
+            if !user_id
+                session[:share_error] = "no such user exists"
+            elsif user_id != [] && !already_shared(user_id, file_id)
                 share_file_with_user(user_id, file_id)
             else
                 session[:share_error] = "file already shared with that user"
