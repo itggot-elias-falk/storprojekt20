@@ -186,7 +186,7 @@ end
 # @see Model#get_all_public_files
 get("/home") do
     public_files = get_all_public_files()
-    slim(:home, locals:{public_files: public_files})
+    slim(:"show_public/home", locals:{public_files: public_files})
 end
 
 # Changes the login status of the user to logged out and redirects to '/'
@@ -325,7 +325,7 @@ get("/files") do
 
     shared_files = get_all_shared_files_for_user(session[:user_id])
     p shared_files
-    slim(:"files/user_files", locals: {shared_files: shared_files, owned_files: owned_files})
+    slim(:"files/show_user_files", locals: {shared_files: shared_files, owned_files: owned_files})
 end
 
 # Displays a form to edit, share and unshare a file
@@ -413,7 +413,7 @@ end
 # Displays a form to create a new folder
 #
 get("/folders/new") do
-    slim(:"folders/new")
+    slim(:"folders/create")
 end
 
 # Attempts to create a folder
