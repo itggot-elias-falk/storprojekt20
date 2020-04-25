@@ -23,13 +23,13 @@
                 - elsif file["file_size"] > 10**6
                     td #{((file["file_size"])/2**20).round(1)} MB
                 td
-                    form action="/file/download/#{file["file_id"]}" method="post"
+                    form action="/files/#{file["file_id"]}/download" method="post"
                         input type="submit" value="Download"
                 td
-                    form action="/file/delete/#{file["file_id"]}" method="post" 
+                    form action="/files/#{file["file_id"]}/delete" method="post" 
                         input type="submit" value="Delete"
                 td
-                    form action="/user_files/#{file["file_id"]}" method="get"
+                    form action="/files/#{file["file_id"]}/edit" method="get"
                         input type="submit" value="Edit"
     h3 Shared files
     - if shared_files == []
@@ -60,6 +60,6 @@
                             td #{((file["file_size"])/2**20).round(1)} MB
                         td = file["username"]
                         td
-                            form action="/file/download/#{file["file_id"]}" method="post" 
+                            form action="/files/#{file["file_id"]}/download" method="post" 
                                 input type="hidden" name="file_id" value="#{file["file_id"]}"
                                 input type="submit" value="Download"

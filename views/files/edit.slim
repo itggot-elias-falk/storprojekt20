@@ -2,7 +2,7 @@
 
 div.edit-box
     h1 Edit #{file["file_name"]}
-    form action="/update_file/#{params[:file_id]}" method="post"
+    form action="/files/#{params[:file_id]}/update" method="post"
 
         p Filename
         input type="text" value="#{file["file_name"]}" name="file_name"

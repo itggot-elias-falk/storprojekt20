@@ -1,12 +1,29 @@
+GIT
+  remote: https://github.com/chrisb/yard-sinatra
+  revision: 226e048f615bdf068e65010d47f8cb143fd08865
+  specs:
+    yard-sinatra (2.0.0.beta)
+      activesupport
+      yard (~> 0.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
+    activesupport (5.2.4.2)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
     bcrypt (3.1.13)
+    concurrent-ruby (1.1.6)
     ffi (1.11.3-x64-mingw32)
     fileutils (1.4.1)
+    i18n (1.8.2)
+      concurrent-ruby (~> 1.0)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    minitest (5.14.0)
     mustermann (1.0.3)
     rack (2.0.7)
     rack-protection (2.0.7)
@@ -26,7 +43,11 @@ GEM
       tilt (>= 2.0.6, < 2.1)
     sqlite3 (1.4.1)
     temple (0.8.2)
+    thread_safe (0.3.6)
     tilt (2.0.9)
+    tzinfo (1.2.7)
+      thread_safe (~> 0.1)
+    yard (0.9.24)
 
 PLATFORMS
   x64-mingw32
@@ -38,6 +59,8 @@ DEPENDENCIES
   sinatra
   slim
   sqlite3
+  yard
+  yard-sinatra!
 
 BUNDLED WITH
-   1.16.6
+   2.1.4

@@ -26,7 +26,7 @@ body {
 
 .left-content {
     width: 50%;
-    background: url("../img/ourcloud_logo.png") no-repeat center; 
+    background: url("/img/ourcloud_logo.png") no-repeat center; 
     border-radius: 10px 0px 0px 10px;
 }
 
@@ -78,18 +78,18 @@ body {
 }
 
 form input[type="email"] {
-    background-image: url("../img/email-24px.svg");
+    background-image: url("/img/email-24px.svg");
     padding-left: 50px;
 }
 
 form input[type="password"] {
-    background-image: url("../img/vpn_key-24px.svg");
+    background-image: url("/img/vpn_key-24px.svg");
     padding-left: 50px;
 }
 
 .register-container form input[type="text"] {
     padding-left: 50px;
-    background-image: url("../img/people_alt-24px.svg")
+    background-image: url("/img/people_alt-24px.svg")
 }
 
 .register-container form input[type="submit"], .login-box form input[type="submit"]{

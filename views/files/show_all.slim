@@ -1,5 +1,5 @@
 .files_home
-    h3 Public files
+    h3 All files!!!
     table
         tr  
             td 
@@ -10,7 +10,7 @@
             td File size
             td Owner
             td 
-        - public_files.each_with_index do |file, index|
+        - all_files.each_with_index do |file, index|
             tr.files
                 td = index + 1
                 td = file["file_name"].split(".")[0]
@@ -25,7 +25,9 @@
                 td
                     form action="/files/#{file["file_id"]}/download" method="post"
                         input type="submit" value="Download"
-                - if session[:user_id] == file["owner_id"] || session[:rank] > 0
-                    td
-                        form action="/files/#{file["file_id"]}/delete" method="post"
-                            input type="submit" value="Delete"
+                td
+                    form action="/files/#{file["file_id"]}/delete" method="post"
+                        input type="submit" value="Delete"
+                td
+                    form action="/files/#{file["file_id"]}/edit" method="get"
+                        input type="submit" value="Edit"

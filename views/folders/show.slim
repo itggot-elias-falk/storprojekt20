@@ -6,6 +6,12 @@ form action="/folders/select" method="post"
                 option value="#{folder["folder_id"]}" = folder["folder_name"] 
     input type="submit" value="select folder"
 
+a href="/folders/new" create new folder
+br
+
+form action="/folders/#{params["folder_id"]}/delete" method="post"
+    input type="submit" value="Delete Folder"
+
 .files_home
     h3 = current_folder[:folder_name]
     table
@@ -31,12 +37,11 @@ form action="/folders/select" method="post"
                 - elsif file["file_size"] > 10**6
                     td #{((file["file_size"])/2**20).round(1)} MB
                 td
-                    form action="/download" method="post" 
-                        input type="hidden" name="file_id" value="#{file["file_id"]}"
+                    form action="/files/#{file["file_id"]}/download" method="post"
                         input type="submit" value="Download"
                 td
-                    form action="/file/delete/#{file["file_id"]}" method="post" 
+                    form action="/files/#{file["file_id"]}/delete" method="post" 
                         input type="submit" value="Delete"
                 td
-                    form action="/user_files/#{file["file_id"]}" method="get"
+                    form action="/files/#{file["file_id"]}/edit" method="get"
                         input type="submit" value="Edit"

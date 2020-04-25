@@ -1,12 +1,15 @@
-
 .wrapper-register-login
     .login-box
         .left-content
         .right-content
             h3 Member Login
+
             form action="/login" method="post"
                 input type="email" name="email" placeholder="Email" autocomplete="off"
                 input type="password" name="password" placeholder="Password"
-                input type="submit" value="Login"
+                - if !session[:timeout]
+                    input type="submit" value="Login"
+                - else
+                    p You have been timed out!
+                    p #{session[:time_left]} seconds left
             p Don't have an account? Register one <a href="/register"> here </a>
-    

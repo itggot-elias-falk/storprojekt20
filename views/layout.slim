@@ -9,15 +9,17 @@ html lang="en"
     body
         - if session[:user_id] != nil && session[:user_id] != 0
             nav 
-                img src="../img/communism.png" alt="Logo" href="/home"
+                img src="/img/communism.png" alt="Logo" href="/home"
                 div.nav-content
+                    - if session[:rank] >= 1
+                        a href="/files/all" <b>All files</b>
                     a href="/home" Home
-                    a href="/user_files" Files
+                    a href="/files" Files
                     a href="/folders" Folders
-                    a href="/file/upload" Upload file
+                    a href="/files/upload" Upload file
                     form action="/logout" method="post" class="logout"
                         input type="submit" value="Logout"
                     div.user-container
                         a href="/user" = session[:username]
-                        img src="../img/user_icon.png" alt=""
+                        img src="/img/user_icon.png" alt=""
         ==yield
