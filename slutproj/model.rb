@@ -321,7 +321,6 @@ def get_all_folderdata_for_folder_id(folder_id)
     return $db.execute("SELECT * FROM folders WHERE folder_id = ?", folder_id)
 end
 
-
 # Searches for a matching folder_id and user_id
 #
 # @param [Integer] folder_id the id of the folder
@@ -329,7 +328,7 @@ end
 #
 # @return [Boolean]
 def has_access_to_folder(folder_id, user_id)
-    if get_all_user_data(user_id).first["rank"] == 1
+    if get_all_user_data(user_id).first["rank"] >= 1
         return true
     end
     owner_id = $db.execute("SELECT owner_id FROM folders WHERE folder_id = ?", folder_id).first["owner_id"]
@@ -347,7 +346,8 @@ end
 #
 # @return [Boolean]
 def has_access_to_file(file_id, user_id)
-    if get_all_user_data(user_id).first["rank"] == 1
+
+    if get_all_user_data(user_id).first["rank"] >= 1
         return true
     end
 
