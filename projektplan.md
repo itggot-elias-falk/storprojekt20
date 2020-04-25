@@ -4,7 +4,7 @@
 Man ska kunna ladda upp filer och dela dem med andra användare samt lägga dem i dina mappar.
 ## 2. Vyer (visa bildskisser på dina sidor)
 ## 3. Databas med ER-diagram (Bild)
-
+![ER-diagram](Screenshot_97.png)
 ## 4. Arkitektur (Beskriv filer och mappar - vad gör/inehåller de?)
 app.rb --> alla routes samt vissa helper funktioner
 
