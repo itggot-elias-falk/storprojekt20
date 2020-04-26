@@ -21,10 +21,11 @@ div.edit-box
         input type="text" placeholder="username1, username2..." name="share_usernames"
 
         p Folder
-        select name="folder" 
-            option choose folder
+        select name="folder"
+            option value="#{file["folder_id"]}" = current_folder["folder_name"]
             - user_folders.each do |folder|
-                option value="#{folder["folder_id"]}" = folder["folder_name"]
+                - if folder["folder_id"] != current_folder["folder_id"]
+                    option value="#{folder["folder_id"]}" = folder["folder_name"] 
 
         br
         a href="/folders/new" Create new folder

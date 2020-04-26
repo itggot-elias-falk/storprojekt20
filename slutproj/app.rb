@@ -186,7 +186,7 @@ end
 # @see Model#get_all_public_files
 get("/home") do
     public_files = get_all_public_files()
-    slim(:"show_public/home", locals:{public_files: public_files})
+    slim(:"files/show_public", locals:{public_files: public_files})
 end
 
 # Changes the login status of the user to logged out and redirects to '/'
@@ -338,7 +338,7 @@ end
 # @see Model#get_all_folderdata_for_user_id
 get("/files/:file_id/edit") do
     file_id = params["file_id"]
-    file = get_file_data(file_id)
+    file = get_all_file_data(file_id).first
     user_ids_with_access = get_users_with_access(file_id)
     
     usernames = []
@@ -350,8 +350,9 @@ get("/files/:file_id/edit") do
     end
 
     user_folders = get_all_folderdata_for_user_id(session[:user_id])
+    current_folder = get_all_folderdata_for_folder_id(file["folder_id"]).first
 
-    slim(:"files/edit", locals:{file_id: file_id, file: file, users_with_access: users_with_access, user_folders: user_folders})
+    slim(:"files/edit", locals:{file_id: file_id, file: file, users_with_access: users_with_access, user_folders: user_folders, current_folder: current_folder})
 end
 
 # Attempts to update a file and redirects to the last route
