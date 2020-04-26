@@ -25,7 +25,7 @@ div.edit-box
             option value="#{file["folder_id"]}" = current_folder["folder_name"]
             - user_folders.each do |folder|
                 - if folder["folder_id"] != current_folder["folder_id"]
-                    option value="#{folder["folder_id"]}" = folder["folder_name"] 
+                    option value="#{folder["folder_id"]}" = folder["folder_name"]
 
         br
         a href="/folders/new" Create new folder
@@ -36,8 +36,6 @@ div.edit-box
 
         p <b>users with access</b>
         - users_with_access.each do |user|
-            / Om inte denna tomma form finns laddas inte nästa form wtf??
-            form
             form action="/files/#{file_id}/unshare/#{user["user_id"]}" method="post"
                 p = user["username"]
                 input type="submit" value="unshare"

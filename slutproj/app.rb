@@ -30,6 +30,9 @@ after do
     p "last route: #{session[:last_route]}"
 end
 
+
+# Adds a login attempt to a counter and starts a timer if the counter exceeds a number
+#
 def add_login_attempt()
     session[:login_attempt] += 1
     p "login attemps = #{session[:login_attempt]}"
@@ -39,10 +42,11 @@ def add_login_attempt()
         session[:timeout] = true
         session[:login_attempt] = 0
     end
-
-
 end
 
+
+# Updates the timeout status and time left of the timeout
+#
 def update_timeout_status()
     if session[:timeout] == true
         current_time = Time.new.to_i
@@ -350,8 +354,10 @@ get("/files/:file_id/edit") do
     end
 
     user_folders = get_all_folderdata_for_user_id(session[:user_id])
-    current_folder = get_all_folderdata_for_folder_id(file["folder_id"]).first
 
+    current_folder = get_all_folderdata_for_folder_id(file["folder_id"]).first
+    p file["folder_id"]
+    p current_folder
     slim(:"files/edit", locals:{file_id: file_id, file: file, users_with_access: users_with_access, user_folders: user_folders, current_folder: current_folder})
 end
 
@@ -414,7 +420,7 @@ end
 # Displays a form to create a new folder
 #
 get("/folders/new") do
-    slim(:"folders/create")
+    slim(:"folders/new")
 end
 
 # Attempts to create a folder

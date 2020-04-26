@@ -3,6 +3,7 @@ require "bcrypt"
 
 $db = SQLite3::Database.new("db/cloud_db.db")
 $db.results_as_hash = true
+$db.execute("PRAGMA foreign_keys = ON;")
 
 
 # Searches for a matching email and password
@@ -346,15 +347,15 @@ end
 #
 # @return [Boolean]
 def has_access_to_file(file_id, user_id)
-
     if get_all_user_data(user_id).first["rank"] >= 1
         return true
     end
-
+    
     owner_id = $db.execute("SELECT owner_id FROM files WHERE file_id = ?", file_id).first["owner_id"]
     if owner_id == user_id
         return true
     end
+
     shared_users = $db.execute("SELECT user_id FROM shared_files WHERE file_id = ?", file_id)
     shared_users.each do |user|
         if user["user_id"] == user_id
@@ -363,7 +364,6 @@ def has_access_to_file(file_id, user_id)
     end
     return false
 end
-
 
 # Gets all data from files
 #
