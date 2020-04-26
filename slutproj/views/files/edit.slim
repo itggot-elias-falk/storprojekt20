@@ -42,6 +42,8 @@ div.edit-box
 
         p <b>users with access</b>
         - users_with_access.each do |user|
+            / måste finnas en tom form här för att den andra formen ska dyka upp, väldigt skumt
+            form
             form action="/files/#{file_id}/unshare/#{user["user_id"]}" method="post"
                 p = user["username"]
                 input type="submit" value="unshare"
