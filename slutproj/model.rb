@@ -250,6 +250,11 @@ def get_all_shared_files_for_user(user_id)
         WHERE shared_files.user_id = ?", user_id)
 end
 
+# Gets all the file data from a given file id
+#
+# @param [Integer] file_id the id of the file
+#
+# @return [Array]
 def get_all_file_data(file_id)
     return $db.execute("SELECT files.*, users.username
         FROM files 

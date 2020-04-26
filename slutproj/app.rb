@@ -205,6 +205,11 @@ get("/user") do
     slim(:"users/edit")
 end
 
+# Creates a new directory and uploads the file to local storage
+#
+# @param [Integer] file_id the id of the file being uploaded and name of the directory being created
+# @param [String] filename the name of the file being uploaded
+# @param [File] file the filepath to the tempfile being uploaded
 def create_file(file_id, filename, file)
     Dir.mkdir "./public/uploads/#{file_id}"
     path = "./public/uploads/#{file_id}/#{filename}"
@@ -213,6 +218,11 @@ def create_file(file_id, filename, file)
     end
 end
 
+# Renames a file in local storage
+#
+# @param [Integer] file_id the id of the file and file directory name of the file being uploaded
+# @param [String] old_filename the old filename
+# @param [String] new_filename the new filename
 def rename_file(file_id, old_filename, new_filename)
     path = "./public/uploads/#{file_id}"
     if old_filename != new_filename
@@ -336,7 +346,7 @@ end
 # 
 # @param [Integer] :file_id, the id of the file being edited
 #
-# @see Model#get_file_data
+# @see Model#get_all_file_data
 # @see Model#get_users_with_access
 # @see Model#get_all_user_data
 # @see Model#get_all_folderdata_for_user_id

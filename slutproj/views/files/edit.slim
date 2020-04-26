@@ -22,10 +22,16 @@ div.edit-box
 
         p Folder
         select name="folder"
-            option value="#{file["folder_id"]}" = current_folder["folder_name"]
-            - user_folders.each do |folder|
-                - if folder["folder_id"] != current_folder["folder_id"]
+            - if current_folder["folder_id"] == 0
+                option value="0" select folder
+                - user_folders.each do |folder|
                     option value="#{folder["folder_id"]}" = folder["folder_name"]
+            - else
+                option value="#{current_folder["folder_id"]}" = current_folder["folder_name"]
+                option value="0" no folder
+                - user_folders.each do |folder|
+                    - if folder["folder_id"] != current_folder["folder_id"]
+                        option value="#{folder["folder_id"]}" = folder["folder_name"]
 
         br
         a href="/folders/new" Create new folder

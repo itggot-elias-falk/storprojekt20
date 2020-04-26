@@ -112,7 +112,10 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Adds a login attempt to a counter and starts a timer if the counter exceeds
+a number.</p>
+</div></span>
   
 </li>
 
@@ -158,7 +161,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Creates a new directory and uploads the file to local storage.</p>
+</div></span>
   
 </li>
 
@@ -575,7 +580,7 @@ and delete the current folder.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="top-level-namespace.html#get_all_file_data-instance_method" title="#get_all_file_data (instance method)">#<strong>get_all_file_data</strong>(file_id)  &#x21d2; Object </a>
+      <a href="top-level-namespace.html#get_all_file_data-instance_method" title="#get_all_file_data (instance method)">#<strong>get_all_file_data</strong>(file_id)  &#x21d2; Array </a>
     
 
     
@@ -589,7 +594,9 @@ and delete the current folder.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets all the file data from a given file id.</p>
+</div></span>
   
 </li>
 
@@ -741,7 +748,7 @@ and delete the current folder.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="top-level-namespace.html#get_all_shared_files_for_user-instance_method" title="#get_all_shared_files_for_user (instance method)">#<strong>get_all_shared_files_for_user</strong>(user_id)  &#x21d2; Object </a>
+      <a href="top-level-namespace.html#get_all_shared_files_for_user-instance_method" title="#get_all_shared_files_for_user (instance method)">#<strong>get_all_shared_files_for_user</strong>(user_id)  &#x21d2; Array </a>
     
 
     
@@ -755,7 +762,9 @@ and delete the current folder.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Gets all the files shared with a user.</p>
+</div></span>
   
 </li>
 
@@ -1306,7 +1315,9 @@ and delete the current folder.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Renames a file in local storage.</p>
+</div></span>
   
 </li>
 
@@ -1448,7 +1459,9 @@ and delete the current folder.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Updates the timeout status and time left of the timeout.</p>
+</div></span>
   
 </li>
 
@@ -1519,15 +1532,26 @@ and delete the current folder.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds a login attempt to a counter and starts a timer if the counter exceeds
+a number</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-33
-34
-35
 36
 37
 38
@@ -1536,10 +1560,11 @@ and delete the current folder.</p>
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_login_attempt'>add_login_attempt</span><span class='lparen'>(</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:login_attempt</span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -1550,8 +1575,6 @@ and delete the current folder.</p>
         <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
         <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:login_attempt</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='kw'>end</span>
-
-
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1635,15 +1658,15 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-259
-260
-261
-262
-263
-264</pre>
+271
+272
+273
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 271</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_already_shared'>already_shared</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM shared_files WHERE file_id = ? AND user_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1665,24 +1688,91 @@ and delete the current folder.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Creates a new directory and uploads the file to local storage</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the file being uploaded and name of the directory being created</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>filename</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the file being uploaded</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt>File</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the filepath to the tempfile being uploaded</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-204
-205
-206
-207
-208
-209
-210</pre>
+213
+214
+215
+216
+217
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 204</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 213</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_file'>create_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_file'>file</span>
     <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_mkdir'>mkdir</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./public/uploads/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_id'>file_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./public/uploads/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_id'>file_id</span><span class='embexpr_end'>}</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filename'>filename</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
@@ -1758,12 +1848,12 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-270
-271
-272</pre>
+282
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 282</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create_folder'>create_folder</span><span class='lparen'>(</span><span class='id identifier rubyid_folder_name'>folder_name</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>INSERT INTO folders (folder_name, owner_id) VALUES (?,?)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_folder_name'>folder_name</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -1821,12 +1911,12 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-183
 184
-185</pre>
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_file_from_db'>delete_file_from_db</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DELETE FROM files WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -1884,12 +1974,12 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-277
-278
-279</pre>
+289
+290
+291</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete_folder'>delete_folder</span><span class='lparen'>(</span><span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DELETE FROM folders WHERE folder_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
@@ -1960,16 +2050,16 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-45
 46
 47
 48
 49
 50
-51</pre>
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_email_exist'>email_exist</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT email from users WHERE email = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2060,16 +2150,16 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-114
 115
 116
 117
 118
 119
-120</pre>
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_file_name_exist'>file_name_exist</span><span class='lparen'>(</span><span class='id identifier rubyid_file_name'>file_name</span><span class='comma'>,</span> <span class='id identifier rubyid_owner_id'>owner_id</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT file_name FROM files WHERE file_name = ? AND owner_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_name'>file_name</span><span class='comma'>,</span> <span class='id identifier rubyid_owner_id'>owner_id</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2111,10 +2201,6 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-64
-65
-66
-67
 68
 69
 70
@@ -2129,10 +2215,14 @@ and delete the current folder.</p>
 79
 80
 81
-82</pre>
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 68</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_update_timeout_status'><span class='object_link'><a href="#update_timeout_status-instance_method" title="#update_timeout_status (method)">update_timeout_status</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -2186,12 +2276,12 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-86
-87
-88</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 90</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/error</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:error</span><span class='rparen'>)</span>
@@ -2221,6 +2311,13 @@ and delete the current folder.</p>
 <div class="tags">
   
 
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>Model#get_all_shared_files_for_user</li>
+    
+  </ul>
+
 
 
 </div><table class="source_code">
@@ -2229,23 +2326,23 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-322
-323
-324
-325
-326
-327
-328</pre>
+338
+339
+340
+341
+342
+343
+344</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 338</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_owned_files'>owned_files</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_owned_files'><span class='object_link'><a href="#get_all_owned_files-instance_method" title="#get_all_owned_files (method)">get_all_owned_files</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
     <span class='id identifier rubyid_shared_files'>shared_files</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_shared_files_for_user'><span class='object_link'><a href="#get_all_shared_files_for_user-instance_method" title="#get_all_shared_files_for_user (method)">get_all_shared_files_for_user</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_shared_files'>shared_files</span>
-    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;files/user_files&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span> <span class='lbrace'>{</span><span class='label'>shared_files:</span> <span class='id identifier rubyid_shared_files'>shared_files</span><span class='comma'>,</span> <span class='label'>owned_files:</span> <span class='id identifier rubyid_owned_files'>owned_files</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;files/show_user_files&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span> <span class='lbrace'>{</span><span class='label'>shared_files:</span> <span class='id identifier rubyid_shared_files'>shared_files</span><span class='comma'>,</span> <span class='label'>owned_files:</span> <span class='id identifier rubyid_owned_files'>owned_files</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2295,7 +2392,7 @@ and delete the current folder.</p>
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
-      <li>Model#get_file_data</li>
+      <li>Model#get_all_file_data</li>
     
       <li>Model#get_users_with_access</li>
     
@@ -2313,30 +2410,33 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354</pre>
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 354</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/:file_id/edit</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_id'>file_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='id identifier rubyid_get_file_data'><span class='object_link'><a href="#get_file_data-instance_method" title="#get_file_data (method)">get_file_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_file_data'><span class='object_link'><a href="#get_all_file_data-instance_method" title="#get_all_file_data (method)">get_all_file_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
     <span class='id identifier rubyid_user_ids_with_access'>user_ids_with_access</span> <span class='op'>=</span> <span class='id identifier rubyid_get_users_with_access'><span class='object_link'><a href="#get_users_with_access-instance_method" title="#get_users_with_access (method)">get_users_with_access</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     
     <span class='id identifier rubyid_usernames'>usernames</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -2349,7 +2449,10 @@ and delete the current folder.</p>
 
     <span class='id identifier rubyid_user_folders'>user_folders</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_folderdata_for_user_id'><span class='object_link'><a href="#get_all_folderdata_for_user_id-instance_method" title="#get_all_folderdata_for_user_id (method)">get_all_folderdata_for_user_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 
-    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;files/edit&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>file_id:</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='label'>file:</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='label'>users_with_access:</span> <span class='id identifier rubyid_users_with_access'>users_with_access</span><span class='comma'>,</span> <span class='label'>user_folders:</span> <span class='id identifier rubyid_user_folders'>user_folders</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_current_folder'>current_folder</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_folderdata_for_folder_id'><span class='object_link'><a href="#get_all_folderdata_for_folder_id-instance_method" title="#get_all_folderdata_for_folder_id (method)">get_all_folderdata_for_folder_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>folder_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+    <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_file'>file</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>folder_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_current_folder'>current_folder</span>
+    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;files/edit&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>file_id:</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='label'>file:</span> <span class='id identifier rubyid_file'>file</span><span class='comma'>,</span> <span class='label'>users_with_access:</span> <span class='id identifier rubyid_users_with_access'>users_with_access</span><span class='comma'>,</span> <span class='label'>user_folders:</span> <span class='id identifier rubyid_user_folders'>user_folders</span><span class='comma'>,</span> <span class='label'>current_folder:</span> <span class='id identifier rubyid_current_folder'>current_folder</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2391,13 +2494,13 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-315
-316
-317
-318</pre>
+330
+331
+332
+333</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 315</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 330</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/all</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_all_files'>all_files</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_files'><span class='object_link'><a href="#get_all_files-instance_method" title="#get_all_files (method)">get_all_files</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -2436,16 +2539,16 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-221
-222
-223
-224
-225
-226
-227</pre>
+236
+237
+238
+239
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 221</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 236</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/upload</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>nil</span>
@@ -2494,14 +2597,14 @@ and delete the current folder.</p>
       <pre class="lines">
 
 
-443
-444
-445
-446
-447</pre>
+462
+463
+464
+465
+466</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 443</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 462</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_folders'>folders</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_folderdata_for_user_id'><span class='object_link'><a href="#get_all_folderdata_for_user_id-instance_method" title="#get_all_folderdata_for_user_id (method)">get_all_folderdata_for_user_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -2573,16 +2676,16 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-464
-465
-466
-467
-468
-469
-470</pre>
+483
+484
+485
+486
+487
+488
+489</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 464</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 483</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders/:folder_id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_folders'>folders</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_folderdata_for_user_id'><span class='object_link'><a href="#get_all_folderdata_for_user_id-instance_method" title="#get_all_folderdata_for_user_id (method)">get_all_folderdata_for_user_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -2624,12 +2727,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-414
-415
-416</pre>
+433
+434
+435</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 414</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 433</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders/new</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;folders/new&quot;</span><span class='rparen'>)</span>
@@ -2674,17 +2777,17 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-187
-188
-189
-190</pre>
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 191</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/home</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_public_files'>public_files</span> <span class='op'>=</span> <span class='id identifier rubyid_get_all_public_files'><span class='object_link'><a href="#get_all_public_files-instance_method" title="#get_all_public_files (method)">get_all_public_files</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:home</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>public_files:</span> <span class='id identifier rubyid_public_files'>public_files</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;files/show_public&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>public_files:</span> <span class='id identifier rubyid_public_files'>public_files</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2719,12 +2822,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 96</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/register</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;users/register&quot;</span><span class='rparen'>)</span>
@@ -2762,12 +2865,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-200
-201
-202</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 204</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;users/edit&quot;</span><span class='rparen'>)</span>
@@ -2780,27 +2883,73 @@ and delete the current folder</p>
       <div class="method_details ">
   <h3 class="signature " id="get_all_file_data-instance_method">
   
-    #<strong>get_all_file_data</strong>(file_id)  &#x21d2; <tt>Object</tt> 
+    #<strong>get_all_file_data</strong>(file_id)  &#x21d2; <tt>Array</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets all the file data from a given file id</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the file</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-246
-247
-248
-249
-250
-251</pre>
+258
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_file_data'>get_all_file_data</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT files.*, users.username
@@ -2854,14 +3003,14 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-365
-366
-367
-368
-369</pre>
+376
+377
+378
+379
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 365</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 376</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_files'>get_all_files</span><span class='lparen'>(</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT users.username, files.* 
@@ -2934,12 +3083,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-304
-305
-306</pre>
+316
+317
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_files_in_folder'>get_all_files_in_folder</span><span class='lparen'>(</span><span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM files WHERE folder_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
@@ -3010,12 +3159,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-314
-315
-316</pre>
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 326</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_folderdata_for_folder_id'>get_all_folderdata_for_folder_id</span><span class='lparen'>(</span><span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM folders WHERE folder_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
@@ -3075,12 +3224,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-103
 104
-105</pre>
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_folderdata_for_user_id'>get_all_folderdata_for_user_id</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM folders WHERE owner_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -3151,12 +3300,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-207
 208
-209</pre>
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_owned_files'>get_all_owned_files</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM files WHERE owner_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -3207,15 +3356,15 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-81
 82
 83
 84
 85
-86</pre>
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_public_files'>get_all_public_files</span><span class='lparen'>(</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * 
@@ -3231,28 +3380,74 @@ and delete the current folder</p>
       <div class="method_details ">
   <h3 class="signature " id="get_all_shared_files_for_user-instance_method">
   
-    #<strong>get_all_shared_files_for_user</strong>(user_id)  &#x21d2; <tt>Object</tt> 
+    #<strong>get_all_shared_files_for_user</strong>(user_id)  &#x21d2; <tt>Array</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Gets all the files shared with a user</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>user_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the user</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-238
-239
-240
-241
-242
-243
-244</pre>
+245
+246
+247
+248
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 238</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_shared_files_for_user'>get_all_shared_files_for_user</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * 
@@ -3327,12 +3522,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-286
-287
-288</pre>
+298
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_all_user_data'>get_all_user_data</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM users WHERE user_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -3403,12 +3598,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-176
 177
-178</pre>
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_file_data'>get_file_data</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT * FROM files WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -3495,12 +3690,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-151
 152
-153</pre>
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_single_file_id'>get_single_file_id</span><span class='lparen'>(</span><span class='id identifier rubyid_file_name'>file_name</span><span class='comma'>,</span> <span class='id identifier rubyid_owner_id'>owner_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT file_id FROM files WHERE owner_id = ? AND file_name = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_owner_id'>owner_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_name'>file_name</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>file_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -3581,16 +3776,16 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-31
 32
 33
 34
 35
 36
-37</pre>
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_user_data'>get_user_data</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_user_id'>user_id</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT user_id FROM users WHERE email = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -3679,17 +3874,17 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-193
 194
 195
 196
 197
 198
 199
-200</pre>
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_user_id_for_username'>get_user_id_for_username</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_user_id'>user_id</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT user_id FROM users WHERE username = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
@@ -3765,12 +3960,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-93
 94
-95</pre>
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_username_for_id'>get_username_for_id</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT username FROM users WHERE user_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>username</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -3841,12 +4036,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-216
 217
-218</pre>
+218
+219</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 217</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_users_with_access'>get_users_with_access</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT user_id FROM shared_files WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -3933,36 +4128,38 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
 354
 355
 356
 357
 358
-359</pre>
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 343</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 354</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_access_to_file'>has_access_to_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_get_all_user_data'><span class='object_link'><a href="#get_all_user_data-instance_method" title="#get_all_user_data (method)">get_all_user_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rank</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>1</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_get_all_user_data'><span class='object_link'><a href="#get_all_user_data-instance_method" title="#get_all_user_data (method)">get_all_user_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rank</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>1</span>
         <span class='kw'>return</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
-
+    
     <span class='id identifier rubyid_owner_id'>owner_id</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT owner_id FROM files WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>owner_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_owner_id'>owner_id</span> <span class='op'>==</span> <span class='id identifier rubyid_user_id'>user_id</span>
         <span class='kw'>return</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
+
     <span class='id identifier rubyid_shared_users'>shared_users</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT user_id FROM shared_files WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_shared_users'>shared_users</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_user'>user</span><span class='op'>|</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_user_id'>user_id</span>
@@ -4053,23 +4250,23 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-325
-326
-327
-328
-329
-330
-331
-332
-333
-334
-335</pre>
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 325</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_access_to_folder'>has_access_to_folder</span><span class='lparen'>(</span><span class='id identifier rubyid_folder_id'>folder_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_get_all_user_data'><span class='object_link'><a href="#get_all_user_data-instance_method" title="#get_all_user_data (method)">get_all_user_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rank</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>1</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_get_all_user_data'><span class='object_link'><a href="#get_all_user_data-instance_method" title="#get_all_user_data (method)">get_all_user_data</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>rank</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>1</span>
         <span class='kw'>return</span> <span class='kw'>true</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_owner_id'>owner_id</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT owner_id FROM folders WHERE folder_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>owner_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -4244,7 +4441,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-132
 133
 134
 135
@@ -4255,10 +4451,11 @@ and delete the current folder</p>
 140
 141
 142
-143</pre>
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_insert_file_into_db'>insert_file_into_db</span><span class='lparen'>(</span><span class='id identifier rubyid_owner_id'>owner_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_name'>file_name</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_date'>upload_date</span><span class='comma'>,</span> <span class='id identifier rubyid_last_access_date'>last_access_date</span><span class='comma'>,</span> <span class='id identifier rubyid_file_type'>file_type</span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='comma'>,</span> <span class='id identifier rubyid_public_status'>public_status</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_owner_id'>owner_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_name'>file_name</span><span class='comma'>,</span> <span class='id identifier rubyid_upload_date'>upload_date</span><span class='comma'>,</span> <span class='id identifier rubyid_last_access_date'>last_access_date</span><span class='comma'>,</span> <span class='id identifier rubyid_file_type'>file_type</span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='comma'>,</span> <span class='id identifier rubyid_public_status'>public_status</span>
@@ -4332,15 +4529,15 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-298
-299
-300
-301
-302
-303</pre>
+313
+314
+315
+316
+317
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 298</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 313</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/:file_id/delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_id'>file_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:file_id</span><span class='rbracket'>]</span>
@@ -4440,17 +4637,17 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-284
-285
-286
-287
-288
-289
-290
-291</pre>
+299
+300
+301
+302
+303
+304
+305
+306</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 299</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/:file_id/download</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_id'>file_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:file_id</span><span class='rbracket'>]</span>
@@ -4536,15 +4733,15 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-405
-406
-407
-408
-409
-410</pre>
+424
+425
+426
+427
+428
+429</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 405</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 424</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/:file_id/unshare/:user_id</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_id'>file_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:file_id</span><span class='rbracket'>]</span>
@@ -4700,25 +4897,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387
-388
 389
 390
 391
@@ -4727,10 +4905,29 @@ and delete the current folder</p>
 394
 395
 396
-397</pre>
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 370</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 389</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/:file_id/update</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_id'>file_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:file_id</span><span class='rbracket'>]</span>
@@ -4876,21 +5073,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
 256
 257
 258
@@ -4909,10 +5091,25 @@ and delete the current folder</p>
 271
 272
 273
-274</pre>
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 241</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 256</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/files/upload</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_file_info'>file_info</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span>
@@ -5008,14 +5205,14 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-434
-435
-436
-437
-438</pre>
+453
+454
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 434</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 453</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders/:folder_id/delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_folder_id'>folder_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:folder_id</span><span class='rbracket'>]</span>
@@ -5082,14 +5279,14 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-423
-424
-425
-426
-427</pre>
+442
+443
+444
+445
+446</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 423</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 442</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders/create</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_folder_name'>folder_name</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:folder_name</span><span class='rbracket'>]</span>
@@ -5149,13 +5346,13 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-452
-453
-454
-455</pre>
+471
+472
+473
+474</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 452</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 471</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/folders/select</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_folder_id'>folder_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:folder</span><span class='rbracket'>]</span>
@@ -5241,10 +5438,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-152
-153
-154
-155
 156
 157
 158
@@ -5270,10 +5463,14 @@ and delete the current folder</p>
 178
 179
 180
-181</pre>
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 156</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_update_timeout_status'><span class='object_link'><a href="#update_timeout_status-instance_method" title="#update_timeout_status (method)">update_timeout_status</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -5339,13 +5536,13 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-193
-194
-195
-196</pre>
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 197</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/logout</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_session'>session</span><span class='period'>.</span><span class='id identifier rubyid_clear'>clear</span>
@@ -5463,10 +5660,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-106
-107
-108
-109
 110
 111
 112
@@ -5498,10 +5691,14 @@ and delete the current folder</p>
 138
 139
 140
-141</pre>
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 110</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/register</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_email'>email</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:email</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span>
@@ -5656,12 +5853,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-74
 75
-76</pre>
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_user'>register_user</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_password_digest'>password_digest</span><span class='comma'>,</span> <span class='id identifier rubyid_rank'>rank</span><span class='comma'>,</span> <span class='id identifier rubyid_username_downcase'>username_downcase</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>INSERT INTO users (email, username, password_digest, rank, username_downcase) VALUES (?, ?, ?, ?, ?)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_password_digest'>password_digest</span><span class='comma'>,</span> <span class='id identifier rubyid_rank'>rank</span><span class='comma'>,</span> <span class='id identifier rubyid_username_downcase'>username_downcase</span><span class='rparen'>)</span>
@@ -5680,21 +5877,86 @@ and delete the current folder</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Renames a file in local storage</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file_id</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the id of the file and file directory name of the file being uploaded</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>old_filename</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the old filename</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new_filename</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the new filename</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-212
-213
-214
-215
-216
-217</pre>
+227
+228
+229
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 212</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_rename_file'>rename_file</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_old_filename'>old_filename</span><span class='comma'>,</span> <span class='id identifier rubyid_new_filename'>new_filename</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>./public/uploads/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_file_id'>file_id</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -5771,12 +6033,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-224
 225
-226</pre>
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_share_file_with_user'>share_file_with_user</span><span class='lparen'>(</span><span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>INSERT INTO shared_files (user_id, file_id) VALUES (?, ?)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -5850,12 +6112,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-295
-296
-297</pre>
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unshare_file_in_db'>unshare_file_in_db</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>DELETE FROM shared_files WHERE file_id = ? AND user_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_user_id'>user_id</span><span class='rparen'>)</span>
@@ -5961,12 +6223,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-234
 235
-236</pre>
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 235</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_file_in_db'>update_file_in_db</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_public_status'>public_status</span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UPDATE files SET file_name = ?, public_status = ?, folder_id = ? WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_public_status'>public_status</span><span class='comma'>,</span> <span class='id identifier rubyid_folder_id'>folder_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -6040,12 +6302,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-159
 160
-161</pre>
+161
+162</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_file_size'>update_file_size</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UPDATE files SET file_size = ? WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_file_size'>file_size</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -6119,12 +6381,12 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-167
 168
-169</pre>
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 167</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 168</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_last_access'>update_last_access</span><span class='lparen'>(</span><span class='id identifier rubyid_file_id'>file_id</span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='rparen'>)</span>
     <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UPDATE files SET last_access_date = ? WHERE file_id = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_time'>time</span><span class='comma'>,</span> <span class='id identifier rubyid_file_id'>file_id</span><span class='rparen'>)</span>
@@ -6143,16 +6405,25 @@ and delete the current folder</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Updates the timeout status and time left of the timeout</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-46
-47
-48
-49
 50
 51
 52
@@ -6162,10 +6433,14 @@ and delete the current folder</p>
 56
 57
 58
-59</pre>
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update_timeout_status'>update_timeout_status</span><span class='lparen'>(</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:timeout</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
@@ -6247,16 +6522,16 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-58
 59
 60
 61
 62
 63
-64</pre>
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_username_exist'>username_exist</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
     <span class='kw'>if</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT username_downcase from users WHERE username_downcase = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span> <span class='op'>!=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -6318,7 +6593,6 @@ and delete the current folder</p>
       <pre class="lines">
 
 
-11
 12
 13
 14
@@ -6328,10 +6602,11 @@ and delete the current folder</p>
 18
 19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate_password'>validate_password</span><span class='lparen'>(</span><span class='id identifier rubyid_email'>email</span><span class='comma'>,</span> <span class='id identifier rubyid_password'>password</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_password_for_email'>password_for_email</span> <span class='op'>=</span> <span class='gvar'>$db</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SELECT password_digest FROM users WHERE email = ?</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_email'>email</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>password_digest</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -6354,7 +6629,7 @@ and delete the current folder</p>
 </div>
 
       <div id="footer">
-  Generated on Sat Apr 25 21:23:29 2020 by
+  Generated on Sun Apr 26 18:29:25 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.24 (ruby-2.4.4).
 </div>
